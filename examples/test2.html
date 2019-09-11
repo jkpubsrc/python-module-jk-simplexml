@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<style type="text/css">
+			
+					body {
+						font-family: 'Courier New', Courier, monospace;
+						font-size: 12px;
+						background-color: #f0f0f0;
+						color: #404040;
+						font-weight: normal;
+					}
+					.eElement {
+						margin-left: 20px;
+					}
+					.eText {
+						margin-left: 20px;
+						color: #006000;
+						font-weight: bold;
+						background-color: #f0f8f0;
+					}
+					.eNameB {
+						color: #000060;
+					}
+					.eElementName {
+						background-color: #e8e8f8;
+					}
+				
+
+		</style>
+	</head>
+	<body>
+		<div class="eElement">
+			<div class="eElementWrapper">
+				<span class="eNameB">&lt;<span class="eElementName">ROOT</span></span><span class="eAttributes">
+					 
+
+					<span class="eAttrName">foo</span>=&quot;<span class="eAttrValue">foo</span>&quot;</span><span class="eNameE">&gt;</span>
+			</div>
+			<div class="eElementChildren">
+				<span class="eText">Foo bar</span>
+				<div class="eElement">
+					<div class="eElementWrapper">
+						<span class="eNameB">&lt;<span class="eElementName">SomeElement</span></span><span class="eAttributes">
+							 
+
+							<span class="eAttrName">x</span>=&quot;<span class="eAttrValue">x</span>&quot;
+							 
+
+							<span class="eAttrName">y</span>=&quot;<span class="eAttrValue">y</span>&quot;</span><span class="eNameE">&gt;</span>
+					</div>
+					<div class="eElementChildren"></div>
+					<div class="eElementWrapper">
+						<span class="eNameB">&lt;/<span class="eElementName">SomeElement</span></span><span class="eNameE">&gt;</span>
+					</div>
+				</div>
+				<span class="eText">We &lt; are &gt; going &amp; walking</span>
+			</div>
+			<div class="eElementWrapper">
+				<span class="eNameB">&lt;/<span class="eElementName">ROOT</span></span><span class="eNameE">&gt;</span>
+			</div>
+		</div>
+	</body>
+</html>
