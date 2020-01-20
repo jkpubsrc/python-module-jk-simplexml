@@ -19,11 +19,10 @@ setup(
 	author = "Jürgen Knauth",
 	author_email = "pubsrc@binary-overflow.de",
 	classifiers = [
-		"Programming Language :: Python :: 3",
 		"Development Status :: 4 - Beta",
 		"License :: OSI Approved :: Apache Software License",
 	],
-	description = "This python module provides a simple XML implementation. This is intentionally simple in order to give programmers more control over white spaces used for indentation.",
+	description = "This python module provides a simple XML implementation. (Please note that this implementation does not fully support all aspects of the XML standard. This implementation is kept simple intentionally in order to give programmers more control over whitespaces and indentation.)",
 	download_url = "https://github.com/jkpubsrc/python-module-jk-simplexml/tarball/0.2019.9.11",
 	include_package_data = False,
 	install_requires = [
