@@ -1,7 +1,14 @@
 ﻿
 
+__version__ = "0.2026.1.20"
+__author__ = "Jürgen Knauth"
+
+
+
+
 from .HAbstractElement import HAbstractElement
 from .HText import HText
+from .HComment import HComment
 from .HAttribute import HAttribute
 from .HAttributeList import HAttributeList
 from .HElement_HAbstractElementList import HAbstractElementList, HElement
@@ -18,6 +25,8 @@ from .HToolkit_Write_Dump import HToolkit_Write_Dump
 from .HToolkit_Write_HTML import HToolkit_Write_HTML
 
 from jk_hwriter import HWriter as _HWriter
+
+
 
 
 
@@ -109,7 +118,6 @@ class HSerializer(object):
 
 
 
-__version__ = "0.2019.9.11"
 
 
 

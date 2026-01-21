@@ -1,13 +1,14 @@
 
 
-
-
 from jk_hwriter import HWriter
 from jk_console import Console
 
 from .HElement_HAbstractElementList import *
 from .XMLWriteSettings import *
 from .ImplementationErrorException import ImplementationErrorException
+
+
+
 
 
 
@@ -63,10 +64,12 @@ class HToolkit_Write_XML(object):
 			HToolkit_Write_XML.__writeXmlOpeningTag(xmlWriteSettings, e, w)
 			for eChild in e.children:
 				if isinstance(eChild, HElement):
-					HToolkit_Write_XML.__addXmlPretty(xmlWriteSettings, "", eChild, True, w)
+					HToolkit_Write_XML.__addXmlPretty(xmlWriteSettings, eChild, True, w)
 				else:
 					if isinstance(eChild, HText):
 						HToolkit_Write_XML.__addXmlText(xmlWriteSettings, eChild, w)
+					elif isinstance(eChild, HComment):
+						HToolkit_Write_XML.__addXmlComment(xmlWriteSettings, eChild, w)
 					else:
 						raise ImplementationErrorException("(None)" if eChild is None else str(type(eChild)))
 			HToolkit_Write_XML.__writeXmlClosingTag(xmlWriteSettings, e, w)
@@ -81,6 +84,8 @@ class HToolkit_Write_XML(object):
 				for eChild in e.children:
 					if isinstance(eChild, HText):
 						HToolkit_Write_XML.__addXmlText(xmlWriteSettings, eChild, w)
+					elif isinstance(eChild, HComment):
+						HToolkit_Write_XML.__addXmlComment(xmlWriteSettings, eChild, w)
 					else:
 						raise ImplementationErrorException("(None)" if eChild is None else str(type(eChild)))
 				HToolkit_Write_XML.__writeXmlClosingTag(xmlWriteSettings, e, w)
@@ -103,6 +108,9 @@ class HToolkit_Write_XML(object):
 					else:
 						if isinstance(eChild, HText):
 							HToolkit_Write_XML.__addXmlText(xmlWriteSettings, eChild, w)
+							w.writeLn()
+						elif isinstance(eChild, HComment):
+							HToolkit_Write_XML.__addXmlComment(xmlWriteSettings, eChild, w)
 							w.writeLn()
 						else:
 							raise ImplementationErrorException("(None)" if eChild is None else str(type(eChild)))
@@ -308,6 +316,32 @@ class HToolkit_Write_XML(object):
 	#
 
 	@staticmethod
+	def __addXmlComment(xmlWriteSettings:XMLWriteSettings, htext:HComment, w:HWriter):
+		c_d = xmlWriteSettings.colorSchema["d"] if xmlWriteSettings.colorSchema else ""
+		c_tn = xmlWriteSettings.colorSchema["tn"] if xmlWriteSettings.colorSchema else ""
+		c_an = xmlWriteSettings.colorSchema["an"] if xmlWriteSettings.colorSchema else ""
+		c_av = xmlWriteSettings.colorSchema["av"] if xmlWriteSettings.colorSchema else ""
+		c_r = xmlWriteSettings.colorSchema["r"] if xmlWriteSettings.colorSchema else ""
+		c_t = xmlWriteSettings.colorSchema["t"] if xmlWriteSettings.colorSchema else ""
+
+		text = htext.text
+		if not text:
+			return
+
+		if xmlWriteSettings.textEncoding in (EnumXMLTextOutputEncoding.AlwaysAsIs, EnumXMLTextOutputEncoding.EncodeReservedCharsAsEntities, EnumXMLTextOutputEncoding.OnReservedCharsOutputTextAsCData):
+			w.write(
+				c_t,
+				"<--",
+				text.replace("\n", "\n" + c_t),
+				"-->",
+				c_r
+				)
+
+		else:
+			raise ImplementationErrorException("(None)" if xmlWriteSettings is None else str(xmlWriteSettings.textEncoding))
+	#
+
+	@staticmethod
 	def __addXmlSingleLine(xmlWriteSettings:XMLWriteSettings, e:HElement, w:HWriter):
 		if not e.children:
 			HToolkit_Write_XML.__writeXmlOpeningClosingTag(xmlWriteSettings, e, w)
@@ -316,6 +350,8 @@ class HToolkit_Write_XML(object):
 			for eChild in e.children:
 				if isinstance(eChild, HText):
 					HToolkit_Write_XML.__addXmlText(xmlWriteSettings, eChild, w)
+				elif isinstance(eChild, HComment):
+					HToolkit_Write_XML.__addXmlComment(xmlWriteSettings, eChild, w)
 				elif isinstance(eChild, HElement):
 					HToolkit_Write_XML.__addXmlSingleLine(xmlWriteSettings, eChild, w)
 				else:
@@ -336,6 +372,8 @@ class HToolkit_Write_XML(object):
 						HToolkit_Write_XML.__addXmlSimple(xmlWriteSettings, eChild, True, w)
 					elif isinstance(eChild, HText):
 						HToolkit_Write_XML.__addXmlText(xmlWriteSettings, eChild, w)
+					elif isinstance(eChild, HComment):
+						HToolkit_Write_XML.__addXmlComment(xmlWriteSettings, eChild, w)
 					else:
 						raise ImplementationErrorException("(None)" if eChild is None else str(type(eChild)))
 				HToolkit_Write_XML.__writeXmlClosingTag(xmlWriteSettings, e, w)

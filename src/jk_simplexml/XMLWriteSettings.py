@@ -19,7 +19,7 @@ class _MyStrategy(object):
 		self.__names.extend(names)
 	#
 
-	def checkOutputTextAsInlineCallback(parentElement:HElement, currentElement:HElement) -> bool:
+	def checkOutputTextAsInlineCallback(self, parentElement:HElement, currentElement:HElement) -> bool:
 		return currentElement.name in self.__name
 	#
 
@@ -65,7 +65,7 @@ class XMLWriteSettings(object):
 			attributeValueColor = jk_console.Console.ForeGround.STD_CYAN,
 			textColor = jk_console.Console.ForeGround.STD_LIGHTBLUE,
 			specialColor = jk_console.Console.ForeGround.STD_LIGHTGREEN
-			)
+		)
 	#
 
 #

@@ -1,25 +1,37 @@
 
 
 
+import jk_prettyprintobj
+
 # from __future__ import annotations		# allowed only in python3.7 and above
 
-from typing import Union
+import typing
 
 from .HAttribute import HAttribute
 from .HText import HText
+from .HComment import HComment
 from .HAttributeList import HAttributeList
 from .HAbstractElement import HAbstractElement
 
 
 
 
-class HElement(HAbstractElement):
+class HElement(HAbstractElement, jk_prettyprintobj.DumpMixin):
 
 	def __init__(self, name:str, attributes = None, children = None):
 		self.name = name
 		self.attributes = HAttributeList(attributes)
 		self.children = HAbstractElementList(children)
 		self.tag = None
+	#
+
+	def _dumpVarNames(self) -> list:
+		return [
+			"name",
+			"attributes",
+			"children",
+			"tag",
+		]
 	#
 
 	def append(self, item:HAbstractElement):
@@ -77,7 +89,7 @@ class HElement(HAbstractElement):
 		return self.name == name
 	#
 
-	def containsAttribute(self, name:str, possibleValues:Union[tuple,list] = None) -> bool:
+	def containsAttribute(self, name:str, possibleValues:typing.Union[tuple,list] = None) -> bool:
 		a = self.attributes.getAttribute(name)
 		if a is None:
 			return False
@@ -91,7 +103,7 @@ class HElement(HAbstractElement):
 				return True
 	#
 
-	def hasAttribute(self, name:str, possibleValues:Union[tuple,list] = None) -> bool:
+	def hasAttribute(self, name:str, possibleValues:typing.Union[tuple,list] = None) -> bool:
 		a = self.attributes.getAttribute(name)
 		if a is None:
 			return False
@@ -129,7 +141,7 @@ class HElement(HAbstractElement):
 		return False
 	#
 
-	def containsChildElements(self, names:Union[tuple,list]):
+	def containsChildElements(self, names:typing.Union[tuple,list]):
 		ret = []
 		for c in self.children:
 			if c.__class__.__name__ == "HElement":
@@ -142,7 +154,7 @@ class HElement(HAbstractElement):
 			return None
 	#
 
-	def hasChildElements(self, names:Union[tuple,list]):
+	def hasChildElements(self, names:typing.Union[tuple,list]):
 		ret = []
 		for c in self.children:
 			if c.__class__.__name__ == "HElement":
@@ -171,6 +183,10 @@ class HElement(HAbstractElement):
 		return self.children.createText(text)
 	#
 
+	def createChildComment(self, text:str) -> "HComment":
+		return self.children.createComment(text)
+	#
+
 	def getAllText(self) -> str:
 		return self.children.getAllText()
 	#
@@ -181,6 +197,10 @@ class HElement(HAbstractElement):
 
 	def getChildElement(self, name:str) -> "HElement":
 		return self.children.getElement(name)
+	#
+
+	def getChildElements(self, name:str) -> list:
+		return self.children.getElements(name)
 	#
 
 	def setChildText(self, text:str):
@@ -333,12 +353,12 @@ class HAbstractElementList(list):
 			if c.__class__.__name__ == "HElement":
 				if c.name == name:
 					ret.append(c)
-		return c
+		return ret
 	#
 
 	def removeAt(self, index:int) -> "HElement":
-		c = self[i]
-		del self[i]
+		c = self[index]
+		del self[index]
 		return c
 	#
 
@@ -371,6 +391,12 @@ class HAbstractElementList(list):
 
 	def createText(self, text:str) -> "HText":
 		c = HText(text)
+		self.append(c)
+		return c
+	#
+
+	def createComment(self, text:str) -> "HComment":
+		c = HComment(text)
 		self.append(c)
 		return c
 	#

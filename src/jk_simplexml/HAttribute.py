@@ -1,16 +1,29 @@
 
 
 
+import jk_prettyprintobj
+
 from .HAbstractElement import HAbstractElement
 
 
 
-class HAttribute(HAbstractElement):
+
+
+
+class HAttribute(HAbstractElement, jk_prettyprintobj.DumpMixin):
 
 	def __init__(self, name:str, value:str):
 		self.name = name
 		self.value = value
 		self.tag = None
+	#
+
+	def _dumpVarNames(self) -> list:
+		return [
+			"name",
+			"value",
+			"tag",
+		]
 	#
 
 	def isDeepEqualTo(self, obj) -> bool:

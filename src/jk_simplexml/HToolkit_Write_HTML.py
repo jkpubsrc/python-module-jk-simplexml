@@ -7,14 +7,14 @@ from jk_hwriter import HWriter
 
 from jk_rawhtml.htmlgeneral import *
 from jk_rawhtml._HTMLElementProto import _HTMLElementProto, HTMLElement
-from jk_rawhtml._HTMLCommentProto import _HTMLCommentProto, HTMLComment
-from jk_rawhtml._HTMLRawTextProto import _HTMLRawTextProto, HTMLRawText
-from jk_rawhtml._HTMLRawCSSProto import _HTMLRawCSSProto, HTMLRawCSS
-from jk_rawhtml.HTML5RootElement import HTML5RootElement
-from jk_rawhtml.HTML5HeadElement import HTML5HeadElement
+from jk_rawhtml._HTMLRawTextProto import _HTMLRawTextProto
+from jk_rawhtml._HTMLTextProto import _HTMLTextProto
 from jk_rawhtml.HTML5Scope import HTML5Scope
 
 from .HElement_HAbstractElementList import *
+
+
+
 
 
 
@@ -37,6 +37,8 @@ class HTMLScopeDefault(object):
 
 	raw_html = _HTMLRawTextProto()
 
+	html = _HTMLTextProto()
+
 	def __enter__(self):
 		return self
 	#
@@ -46,6 +48,9 @@ class HTMLScopeDefault(object):
 	#
 
 #
+
+
+
 
 
 class HToolkit_Write_HTML(object):
