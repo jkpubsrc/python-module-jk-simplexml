@@ -21,12 +21,12 @@
 		"license": "Apache-2.0",
 		"name": "jk_simplexml",
 		"packageClass": "python-module",
-		"version": "0.2025.1.20"
+		"version": "0.2025.1.24"
 	},
 	"requirements": {
 		"htmlcssjs_packages": [],
 		"python_packages": [
-			"jk_hwriter >= 0.2026.1.20",
+			"jk_hwriter >= 0.2025.12.18",
 			"jk_rawhtml >= 0.2026.1.20",
 			"jk_prettyprintobj",		// >= 0.2026.1.3
 			"jk_console",				// >= 0.2025.9.30

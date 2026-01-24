@@ -5,3 +5,8 @@
 	* Migrated to TOML file
 	* Added: HComment
 
+* 2026-01-24:
+	* Fixed: Writing comments
+	* Fixed: Dependencies
+	* Refactoring
+

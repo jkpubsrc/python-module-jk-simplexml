@@ -1,16 +1,17 @@
 
 
 
-import jk_prettyprintobj
+from jk_hwriter import HWriter
 
-from .HAbstractElement import HAbstractElement
-
-
-
-
+from ..HAttribute import HAttribute
+from ..HText import HText
+from ..HElement_HAbstractElementList import HElement
 
 
-class HAttribute(HAbstractElement, jk_prettyprintobj.DumpMixin):
+
+
+
+class HToolkit_Write_Dump(object):
 
 	################################################################################################################################
 	## Constants
@@ -20,12 +21,6 @@ class HAttribute(HAbstractElement, jk_prettyprintobj.DumpMixin):
 	## Constructor
 	################################################################################################################################
 
-	def __init__(self, name:str, value:str):
-		self.name = name
-		self.value = value
-		self.tag = None
-	#
-
 	################################################################################################################################
 	## Public Properties
 	################################################################################################################################
@@ -34,66 +29,57 @@ class HAttribute(HAbstractElement, jk_prettyprintobj.DumpMixin):
 	## Helper Methods
 	################################################################################################################################
 
-	def _dumpVarNames(self) -> list:
-		return [
-			"name",
-			"value",
-			"tag",
-		]
+	@staticmethod
+	def __writeAttribute(a:HAttribute, w:HWriter):
+		if a.value:
+			w.writeLn("--- " + a.name + "=" + HToolkit_Write_Dump.__toText(a.value))
+		else:
+			w.writeLn("--- " + a.name)
+	#
+
+	@staticmethod
+	def __writeHElement(e:HElement, w:HWriter):
+		w.writeLn("<<<" + e.name + ">>>")
+
+		if e.attributes:
+			w.incrementIndent()
+			for a in sorted(e.attributes, key=lambda x: x.name):
+				HToolkit_Write_Dump.__writeAttribute(a, w)
+			w.decrementIndent()
+
+		if e.children:
+			w.incrementIndent()
+			for ea in e.children:
+				if isinstance(ea, HText):
+					w.writeLn(HToolkit_Write_Dump.__toText(ea.text))
+				elif isinstance(ea, HElement):
+					HToolkit_Write_Dump.__writeHElement(ea, w)
+			w.decrementIndent()
+	#
+
+	@staticmethod
+	def __toText(s:str):
+		s = repr(s)
+		return "\"" + s[1:-1] + "\""
 	#
 
 	################################################################################################################################
 	## Public Methods
 	################################################################################################################################
 
-	def isDeepEqualTo(self, obj) -> bool:
-		if isinstance(obj, HAttribute):
-			return (obj.name == self.name) and (obj.value == self.value)
-		else:
-			return False
-	#
-
-	def isShallowEqualTo(self, obj) -> bool:
-		if isinstance(obj, HAttribute):
-			return (obj.name == self.name) and (obj.value == self.value)
-		else:
-			return False
-	#
-
-	def deepClone(self):
-		return HAttribute(self.name, self.value)
-	#
-
-	def __str__(self):
-		if self.value is None:
-			return self.name
-		else:
-			return self.name + "=\"" + self.value + "\""
-	#
-
-	def __repr__(self):
-		if self.value is None:
-			return self.name
-		else:
-			return self.name + "=\"" + self.value + "\""
-	#
-
-	def toPlainText(self, HWriter) -> str:
-		raise NotImplementedError()
-	#
-
 	################################################################################################################################
 	## Public Static Methods
 	################################################################################################################################
 
+	@staticmethod
+	def writeDump(root:HElement, w:HWriter):
+		assert isinstance(root, HElement)
+		assert isinstance(w, HWriter)
+
+		HToolkit_Write_Dump.__writeHElement(root, w)
+	#
+
 #
-
-
-
-
-
-
-
 
 
 

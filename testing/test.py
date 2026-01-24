@@ -17,6 +17,7 @@ with jk_logging.wrapMain() as log:
 	ws = XMLWriteSettings()
 	ws.attributeEncoding = EnumXMLTextOutputEncoding.EncodeReservedCharsAsEntities
 	ws.textEncoding = EnumXMLTextOutputEncoding.EncodeReservedCharsAsEntities
+
 	HSerializer.printXML(xRoot, ws)
 
 

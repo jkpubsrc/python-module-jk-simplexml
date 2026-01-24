@@ -1,16 +1,14 @@
 
 
 
-import jk_prettyprintobj
+from jk_hwriter import HWriter
 
-from .HAbstractElement import HAbstractElement
-
-
+from ..HElement_HAbstractElementList import *
 
 
 
 
-class HAttribute(HAbstractElement, jk_prettyprintobj.DumpMixin):
+class HToolkit_Write_PlainText(object):
 
 	################################################################################################################################
 	## Constants
@@ -20,12 +18,6 @@ class HAttribute(HAbstractElement, jk_prettyprintobj.DumpMixin):
 	## Constructor
 	################################################################################################################################
 
-	def __init__(self, name:str, value:str):
-		self.name = name
-		self.value = value
-		self.tag = None
-	#
-
 	################################################################################################################################
 	## Public Properties
 	################################################################################################################################
@@ -34,69 +26,32 @@ class HAttribute(HAbstractElement, jk_prettyprintobj.DumpMixin):
 	## Helper Methods
 	################################################################################################################################
 
-	def _dumpVarNames(self) -> list:
-		return [
-			"name",
-			"value",
-			"tag",
-		]
+	@staticmethod
+	def __addPlainTextSimple(e:HElement, w:HWriter):
+		for ea in e.children:
+			if isinstance(ea, HText):
+				w.writeLn(ea.text)
+			elif isinstance(ea, HElement):
+				HToolkit_Write_PlainText.__addPlainTextSimple(ea, w)
 	#
 
 	################################################################################################################################
 	## Public Methods
 	################################################################################################################################
 
-	def isDeepEqualTo(self, obj) -> bool:
-		if isinstance(obj, HAttribute):
-			return (obj.name == self.name) and (obj.value == self.value)
-		else:
-			return False
-	#
-
-	def isShallowEqualTo(self, obj) -> bool:
-		if isinstance(obj, HAttribute):
-			return (obj.name == self.name) and (obj.value == self.value)
-		else:
-			return False
-	#
-
-	def deepClone(self):
-		return HAttribute(self.name, self.value)
-	#
-
-	def __str__(self):
-		if self.value is None:
-			return self.name
-		else:
-			return self.name + "=\"" + self.value + "\""
-	#
-
-	def __repr__(self):
-		if self.value is None:
-			return self.name
-		else:
-			return self.name + "=\"" + self.value + "\""
-	#
-
-	def toPlainText(self, HWriter) -> str:
-		raise NotImplementedError()
-	#
-
 	################################################################################################################################
 	## Public Static Methods
 	################################################################################################################################
 
+	@staticmethod
+	def writePlainText(root:HElement, w:HWriter):
+		assert isinstance(root, HElement)
+		assert isinstance(w, HWriter)
+
+		HToolkit_Write_PlainText.__addPlainTextSimple(root, w)
+	#
+
 #
-
-
-
-
-
-
-
-
-
-
 
 
 

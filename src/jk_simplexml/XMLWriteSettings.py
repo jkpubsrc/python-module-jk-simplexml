@@ -11,11 +11,10 @@ from .HElement_HAbstractElementList import HElement
 
 
 
-
 class _MyStrategy(object):
 
-	def __init__(self, names:list):
-		self.__names = set()
+	def __init__(self, names:list[str]):
+		self.__names:set[str] = set()
 		self.__names.extend(names)
 	#
 
@@ -29,6 +28,14 @@ class _MyStrategy(object):
 
 class XMLWriteSettings(object):
 
+	################################################################################################################################
+	## Constants
+	################################################################################################################################
+
+	################################################################################################################################
+	## Constructor
+	################################################################################################################################
+
 	def __init__(self):
 		self.writeXmlHeader = True
 		self.printStyle = EnumXMLPrintStyle.Pretty
@@ -38,12 +45,32 @@ class XMLWriteSettings(object):
 		self.colorSchema = None
 	#
 
-	def setCheckInlineOverrideByElementNames(self, names):
+	################################################################################################################################
+	## Public Properties
+	################################################################################################################################
+
+	################################################################################################################################
+	## Helper Methods
+	################################################################################################################################
+
+	################################################################################################################################
+	## Public Methods
+	################################################################################################################################
+
+	def setCheckInlineOverrideByElementNames(self, names:list[str]):
 		s = _MyStrategy(names)
 		self.checkInlineOverride = s.checkOutputTextAsInlineCallback
 	#
 
 	def setXMLColorSchema(self, metaColor:str, tagDelimiterColor:str, tagNameColor:str, attributeNameColor:str, attributeValueColor:str, textColor:str, specialColor:str):
+		assert isinstance(metaColor, str)
+		assert isinstance(tagDelimiterColor, str)
+		assert isinstance(tagNameColor, str)
+		assert isinstance(attributeNameColor, str)
+		assert isinstance(attributeValueColor, str)
+		assert isinstance(textColor, str)
+		assert isinstance(specialColor, str)
+
 		self.colorSchema = {
 			"d": tagDelimiterColor,
 			"tn": tagNameColor,
@@ -67,6 +94,10 @@ class XMLWriteSettings(object):
 			specialColor = jk_console.Console.ForeGround.STD_LIGHTGREEN
 		)
 	#
+
+	################################################################################################################################
+	## Public Static Methods
+	################################################################################################################################
 
 #
 

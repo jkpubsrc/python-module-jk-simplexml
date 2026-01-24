@@ -1,16 +1,8 @@
 
 
 
-import jk_prettyprintobj
 
-from .HAbstractElement import HAbstractElement
-
-
-
-
-
-
-class HAttribute(HAbstractElement, jk_prettyprintobj.DumpMixin):
+class _CompiledColorSchema(object):
 
 	################################################################################################################################
 	## Constants
@@ -20,10 +12,18 @@ class HAttribute(HAbstractElement, jk_prettyprintobj.DumpMixin):
 	## Constructor
 	################################################################################################################################
 
-	def __init__(self, name:str, value:str):
-		self.name = name
-		self.value = value
-		self.tag = None
+	#
+	# Constructor method.
+	#
+	def __init__(self, colorSchema:dict[str,str]|None):
+		self.c_d = colorSchema["d"] if colorSchema else ""
+		self.c_tn = colorSchema["tn"] if colorSchema else ""
+		self.c_an = colorSchema["an"] if colorSchema else ""
+		self.c_av = colorSchema["av"] if colorSchema else ""
+		self.c_t = colorSchema["t"] if colorSchema else ""
+		self.c_m = colorSchema["m"] if colorSchema else ""
+		self.c_s = colorSchema["s"] if colorSchema else ""
+		self.c_r = colorSchema["r"] if colorSchema else ""
 	#
 
 	################################################################################################################################
@@ -34,69 +34,11 @@ class HAttribute(HAbstractElement, jk_prettyprintobj.DumpMixin):
 	## Helper Methods
 	################################################################################################################################
 
-	def _dumpVarNames(self) -> list:
-		return [
-			"name",
-			"value",
-			"tag",
-		]
-	#
-
 	################################################################################################################################
 	## Public Methods
 	################################################################################################################################
 
-	def isDeepEqualTo(self, obj) -> bool:
-		if isinstance(obj, HAttribute):
-			return (obj.name == self.name) and (obj.value == self.value)
-		else:
-			return False
-	#
-
-	def isShallowEqualTo(self, obj) -> bool:
-		if isinstance(obj, HAttribute):
-			return (obj.name == self.name) and (obj.value == self.value)
-		else:
-			return False
-	#
-
-	def deepClone(self):
-		return HAttribute(self.name, self.value)
-	#
-
-	def __str__(self):
-		if self.value is None:
-			return self.name
-		else:
-			return self.name + "=\"" + self.value + "\""
-	#
-
-	def __repr__(self):
-		if self.value is None:
-			return self.name
-		else:
-			return self.name + "=\"" + self.value + "\""
-	#
-
-	def toPlainText(self, HWriter) -> str:
-		raise NotImplementedError()
-	#
-
-	################################################################################################################################
-	## Public Static Methods
-	################################################################################################################################
-
 #
-
-
-
-
-
-
-
-
-
-
 
 
 
