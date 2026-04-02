@@ -8,8 +8,8 @@ This python module provides a simple XML implementation.
 
 Information about this module can be found here:
 
-* [github.org](https://github.com/jkpubsrc/python-module-jk-simplexml)
-* [pypi.python.org](https://pypi.python.org/pypi/jk_simplexml)
+* [github.com](https://github.com/jkpubsrc/python-module-jk-simplexml)
+* [pypi.org](https://pypi.org/project/jk-simplexml/)
 
 How to use this module
 ----------------------
